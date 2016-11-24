@@ -1,4 +1,7 @@
-# HitoKoto
+# HitoKoto(一言)
+
+[![Build Status](https://travis-ci.org/HakuLess/HitoKoto.svg?branch=master)](https://travis-ci.org/HakuLess/HitoKoto)
+
 模仿hitokoto.cn 一句话（中文、原文）  一张图    带给人一个灵感   一个触动
 
 # 安装依赖
