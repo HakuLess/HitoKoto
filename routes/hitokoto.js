@@ -1,6 +1,7 @@
 var express = require('express');
 var db = require('../db');
 var connection = db.connection();
+var pool = db.pool();
 var router = express.Router();
 
 /* GET home page. */
@@ -18,15 +19,15 @@ router.get('/', function(req, res, next) {
 function getHitokoto(res) {
 
 	//连接数据库
-	connection.connect();
+	// connection.connect();
 
-	connection.query('SELECT * FROM `hitokoto` AS t1 JOIN ' + 
+	pool.query('SELECT * FROM `hitokoto` AS t1 JOIN ' + 
 		'(SELECT ROUND(RAND() * ((SELECT MAX(id) FROM `hitokoto`) - (SELECT MIN(id) FROM `hitokoto`))' + 
 		'+ (SELECT MIN(id) FROM `hitokoto`)) AS id) AS t2 WHERE t1.id >= t2.id ORDER BY t1.id LIMIT 1;', 
 		function(err, rows, fields) {
 	  		if (err) throw err;
 
-			console.log('The solution is: ', rows[0].hitokoto);
+			console.log('The hitokoto is: ', rows[0].hitokoto);
 
 			res.json({
 				hitokoto : rows[0].hitokoto,
@@ -34,10 +35,10 @@ function getHitokoto(res) {
 				type : rows[0].type,
 				author : rows[0].author,
 				from : rows[0].from
-			})
+			});
 	});
 
-	connection.end();
+	// connection.end();
 }
 
 module.exports = router;
