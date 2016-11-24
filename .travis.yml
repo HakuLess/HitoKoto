@@ -1,13 +1,16 @@
 language: node_js
 node_js:
-- 5.3.0
+  - 5.3.0
+
 before_script:
-- openssl aes-256-cbc -K $encrypted_975a7ed3b105_key -iv $encrypted_975a7ed3b105_iv
-  -in db.js.enc -out db.js -d
+  - openssl aes-256-cbc -K $encrypted_975a7ed3b105_key -iv $encrypted_975a7ed3b105_iv -in db.js.enc -out db.js -d
+
 script:
-- DEBUG=hitokoto npm start & npm test
+  - DEBUG=hitokoto npm start & npm test
+
 after_script:
-- print after_script
+  - print after_script
+
 deploy:
   provider: npm
   email: 335279429@qq.com
