@@ -1,12 +1,18 @@
 language: node_js
 node_js:
-  - "5.3.0"
-
-before_script:  
-  - openssl aes-256-cbc -K $encrypted_975a7ed3b105_key -iv $encrypted_975a7ed3b105_iv -in db.js.enc -out db.js -d
-
+- 5.3.0
+before_script:
+- openssl aes-256-cbc -K $encrypted_975a7ed3b105_key -iv $encrypted_975a7ed3b105_iv
+  -in db.js.enc -out db.js -d
 script:
-  - DEBUG=hitokoto npm start & npm test
-
+- DEBUG=hitokoto npm start & npm test
 after_script:
-  - print after_script
+- print after_script
+deploy:
+  provider: npm
+  email: 335279429@qq.com
+  api_key:
+    secure: AwwHaZAdgcbZFQazWmSg+0SXcOW18OnF5z9FAVse0WCen/nFjoqOBkf7fV8Bs0OGQj+SF7YISwUqzt93I62YrkKiLzlra09/VFrjijmSj+UassqA4Cv1Pql51Snuhtkv/xBsXBK6ad7I19lnxoRWGzjw3kgSTUK0+ADUBWnQNrA/avOwhfLlKC8ctxuKlseeR8Vx+gg/ElqCWAAcCmXL3KHk2z2YN7dj+JykOoiB+BUo3pBQRBuoDxET93wqsGfdhy5eaK93XU3HjKNVwdjTu1ta/mFBnJJVLBtPzL/UehWF6AbqTjMx3rZ4oO5p6vgFobfK6S4CBUiw17vaMPpaG2zOtQMIVefa9X3cjVhxbg1E6AyHOSBxNZjoywDX/rLpzjj9OjHGOfiFIh4/IN2Fmg/kRoET7wY3JWqytSbgWuerA2MQAxJ99+nlLn0JpKEpPVZPm3SCPMlXQsCGU+cRwqyZ09x+R5CedEL5cANpV+4dytWIIlvcEBmLqgUow3uYAmVTwYgyBvKd6k9W/SDPSccAQwuZmJStADEILfIjDwmRFEe9jXRNi++PhBtrR/tjbweeC2pM5fjJBa+ttCoJqanjrHFeBAClK4Ss0h84Bma9I08iJzfmAWiUuKU++w7lbo5Rsrm8kjEZwx7r7gU4Ohg6Y9/x1R4XZo3uHGKYYyc=
+  on:
+    tags: true
+    repo: HakuLess/HitoKoto
