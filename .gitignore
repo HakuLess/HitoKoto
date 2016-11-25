@@ -2,3 +2,4 @@ db.js
 /node_modules
 npm-debug.log
 id_rsa
+secrets.tar

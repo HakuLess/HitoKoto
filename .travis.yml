@@ -22,8 +22,8 @@ deploy:
     repo: HakuLess/HitoKoto
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_975a7ed3b105_key -iv $encrypted_975a7ed3b105_iv 
-    -in id_rsa.enc -out id_rsa -in db.js.enc -out db.js -d
+  - openssl aes-256-cbc -K $encrypted_975a7ed3b105_key -iv $encrypted_975a7ed3b105_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
   # 设置id_rsa文件权限
   - chmod 600 id_rsa
   # 添加ssh密钥
