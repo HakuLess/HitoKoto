@@ -3,7 +3,7 @@ node_js:
   - 5.3.0
 
 before_script:
-
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 script:
   - DEBUG=hitokoto npm start & npm test
