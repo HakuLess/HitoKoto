@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    getSeats(res);
+    getSeats(req, res);
 });
 
 router.get('/bind', function(req, res, next) {
@@ -83,12 +83,16 @@ function User() {
 	this.avatar = "";
 }
 
-function getSeats(res) {
+function getSeats(req, res) {
 	
 	var seatsArray = new Array();
 	var seats = new Array();  
 	var row = 1;
 
+	var mis = req.query.mis;
+	var myUser = new User();
+	var loginStatus = 0;
+	
 	pool.query('select * from where_db order by row,col', 
 
 		function(err, rows, fields) {
@@ -112,18 +116,22 @@ function getSeats(res) {
 					seat.user.mis = rows[i].user_mis;
 					seat.user.avatar = rows[i].user_avatar;
 				}
+
+				if (mis == rows[i].user_mis) {
+					myUser.mis = rows[i].user_mis;
+					myUser.name = rows[i].user_name;
+					myUser.avatar = rows[i].user_avatar;
+
+					loginStatus = rows[i].seatStatus;
+				}
 				
 				seats.push(seat);
 			}
 			seatsArray.push(seats);
 
 			res.json({
-			    "user":{
-			        "name" : "马涛",
-			        "mis" : "matao04",
-			        "avatar" : "http://s3-img.meituan.net/v1/mss_491cda809310478f898d7e10a9bb68ec/profile2/cc31f6e2-067c-4446-a4f5-6b4640da475d"
-			    },
-			    "loginStatus" : 1,
+			    "user" : myUser,
+			    "loginStatus" : loginStatus,
 			    "seats" : seatsArray
 				});
 		});
