@@ -1,4 +1,5 @@
 db.js
+config.js
 /node_modules
 npm-debug.log
 id_rsa

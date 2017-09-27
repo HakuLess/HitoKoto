@@ -9,7 +9,12 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var hitokoto = require('./routes/hitokoto');
 var where = require('./routes/where');
+// var wechat = require('./routes/wechat');
 var cors = require('cors');
+
+var config = require('./config');
+
+var wechat = require('wechat');
 
 var app = express();
 
@@ -22,15 +27,41 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, 'public')));
 
+// wechat
+app.use(express.query());
+// app.use('/wechat', wechat);
 app.use('/', index);
-app.use('/users', users);
-app.use('/hitokoto', hitokoto);
-app.use('/where', where);
+
+app.use('/wechat', wechat("wechat", function (req, res, next) {
+  console.log("start")
+  // 微信输入信息都在req.weixin上 
+  var message = req.weixin;
+
+  // 回复屌丝(普通回复) 
+  res.reply('hehe');
+
+}));
+// app.use('/users', users);
+// app.use('/hitokoto', hitokoto);
+// app.use('/where', where);
+
+
+// app.use('/wechat', wechat(config.token, function (req, res, next) {
+//   // 微信输入信息都在req.weixin上 
+//   var message = req.weixin;
+//   if (message.FromUserName === 'diaosi') {
+//     // 回复屌丝(普通回复) 
+//     res.reply('hehe');
+//   } else {
+//     res.reply('123');
+//   }
+// }));
+
 
 
 // catch 404 and forward to error handler
@@ -51,5 +82,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
 module.exports = app;
+
